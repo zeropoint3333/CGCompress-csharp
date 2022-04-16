@@ -58,8 +58,7 @@ namespace CGCompress
                         for (int j = 0; j < W; ++j)
                         {
                             int index = (i * W * C + j * C + k);
-                            byte ss = (byte)((bit1[index] - bit2[index]) % 256);
-                            bitdiff[index] = ss;
+                            bitdiff[index] = (byte)((bit1[index] - bit2[index]) % 256);
                         }
                     }
                 }
