@@ -29,11 +29,14 @@ namespace CGCompress
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Mat source1 = new Mat(@"resource\01.png", ImreadModes.Color);
-            Mat source2 = new Mat(@"resource\02.png", ImreadModes.Color);
-            Mat diff = new Mat();
-            Cv2.Absdiff(source1, source2, diff);
-            Cv2.ImShow("Demo", diff);
+            Mat img1 = Cv2.ImRead(@"resource\01.png");
+            Mat img2 = Cv2.ImRead(@"resource\03.png");
+
+            Mat diff = OpenCvTool.Subtract_Mold(img2, img1);
+            Mat add = OpenCvTool.Add_Mold(img1, diff);
+
+            Cv2.ImShow("image", diff);
+            
             Cv2.WaitKey(0);
         }
     }
