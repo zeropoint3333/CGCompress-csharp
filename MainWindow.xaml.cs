@@ -32,12 +32,22 @@ namespace CGCompress
             Mat img1 = Cv2.ImRead(@"resource\01.png");
             Mat img2 = Cv2.ImRead(@"resource\03.png");
 
-            Mat diff = OpenCvTool.Subtract_Mold(img2, img1);
-            Mat add = OpenCvTool.Add_Mold(img1, diff);
+            Mat diff = ImageTool.Subtract_Mold(img2, img1);
+            Mat add = ImageTool.Add_Mold(img1, diff);
 
-            Cv2.ImShow("image", diff);
-            
+            Cv2.ImShow("image", add);
+
+            Cv2.ImWrite(@"D:\image.png", diff);
+            //Cv2.ImWrite(@"D:\image.jp2", add);
+            //Cv2.ImWrite(@"D:\image.webp", add);
+            //png jp2 webp压缩率依次升高
+
             Cv2.WaitKey(0);
+        }
+
+        private void DataGrid_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

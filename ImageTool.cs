@@ -9,7 +9,7 @@ using OpenCvSharp;
 
 namespace CGCompress
 {
-    internal class OpenCvTool
+    internal class ImageTool
     {
         //OpenCvSharp自带的Add方法为饱和运算，这里改为需要的模运算
         public static Mat Add_Mold(Mat img1, Mat img2)
