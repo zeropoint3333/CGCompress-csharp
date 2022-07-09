@@ -9,6 +9,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="build-CGCompress-Desktop_Qt_5_13_2_MinGW_64_bit-Debug\**" />
+    <Compile Remove="CGCompress\**" />
+    <EmbeddedResource Remove="build-CGCompress-Desktop_Qt_5_13_2_MinGW_64_bit-Debug\**" />
+    <EmbeddedResource Remove="CGCompress\**" />
+    <None Remove="build-CGCompress-Desktop_Qt_5_13_2_MinGW_64_bit-Debug\**" />
+    <None Remove="CGCompress\**" />
+    <Page Remove="build-CGCompress-Desktop_Qt_5_13_2_MinGW_64_bit-Debug\**" />
+    <Page Remove="CGCompress\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="resource\01.png" />
     <None Remove="resource\02.png" />
     <None Remove="resource\03.png" />
@@ -33,6 +44,11 @@
     <PackageReference Include="7-Zip.CommandLine" Version="18.1.0" />
     <PackageReference Include="OpenCvSharp4" Version="4.5.5.20211231" />
     <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.5.5.20211231" />
+    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Include="App.xaml" />
   </ItemGroup>
 
 </Project>

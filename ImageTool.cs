@@ -63,8 +63,56 @@ namespace CGCompress
                     }
                 }
             }
-
             return diff;
+        }
+
+        public static double square_mean(Mat img)
+        {
+            int H = img.Rows;
+            int W = img.Cols;
+            int C = img.Channels();
+            double square_add = 0;
+            unsafe
+            {
+                byte* bit = (byte*)img.Data;
+                for (int k = 0; k < C; k++)
+                {
+                    for (int i = 0; i < H; ++i)
+                    {
+                        for (int j = 0; j < W; ++j)
+                        {
+                            int index = (i * W * C + j * C + k);
+                            square_add += bit[index] * bit[index];
+                        }
+                    }
+                }
+            }
+            return Math.Pow(square_add/(H*W*C),0.5);
+        }
+
+        public static double zerorate(Mat img)
+        {
+            int H = img.Rows;
+            int W = img.Cols;
+            int C = img.Channels();
+            double zeros = 0;
+            unsafe
+            {
+                byte* bit = (byte*)img.Data;
+                for (int k = 0; k < C; k++)
+                {
+                    for (int i = 0; i < H; ++i)
+                    {
+                        for (int j = 0; j < W; ++j)
+                        {
+                            int index = (i * W * C + j * C + k);
+                            if (bit[index] == 0)
+                                zeros++;
+                        }
+                    }
+                }
+            }
+            return zeros/(H*W*C);
         }
     }
 }
