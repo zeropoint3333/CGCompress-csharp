@@ -57,18 +57,23 @@ namespace CGCompress
         {
             Microsoft.WindowsAPICodePack.Dialogs.CommonOpenFileDialog openFolderDialog = new Microsoft.WindowsAPICodePack.Dialogs.CommonOpenFileDialog();
             openFolderDialog.IsFolderPicker = true;
-            openFolderDialog.ShowDialog();
-            common.Path = openFolderDialog.FileName;
-            DirectoryInfo folder = new DirectoryInfo(common.Path);
-            this.Path_TextBox.Text = common.Path;
-            FileSystemInfo[] subdir = folder.GetFileSystemInfos();
-            FileExplorer.ItemsSource = subdir;
+            if (openFolderDialog.ShowDialog() == Microsoft.WindowsAPICodePack.Dialogs.CommonFileDialogResult.Ok)
+            {
+                common.Path = openFolderDialog.FileName;
+                DirectoryInfo folder = new DirectoryInfo(common.Path);
+                this.Path_TextBox.Text = common.Path;
+                FileSystemInfo[] subdir = folder.GetFileSystemInfos();
+                FileExplorer.ItemsSource = subdir;
+            }
         }
 
         private void Compress_Click(object sender, RoutedEventArgs e)
         {
             DirectoryInfo folder = new DirectoryInfo(common.Path);
             ArrayList imgpaths = new ArrayList();
+
+            
+
             //读取所有图片格式的文件，包括jpg png jpeg tiff
             foreach (FileInfo file in folder.GetFileSystemInfos("*.jpg"))
             {
@@ -92,6 +97,7 @@ namespace CGCompress
             }
             ImagePack.Compress(imgpaths, 3, this.Path_TextBox.Text, "png");
             //foreach (String file in imgpath) MessageBox.Show(file);
+
 
         }
     }

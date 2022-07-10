@@ -6,13 +6,13 @@
         xmlns:local="clr-namespace:CGCompress"
         mc:Ignorable="d"
         Title="MainWindow" Height="566" Width="1000">
-    <Grid x:Name="grid">
+    <Grid x:Name="grid" VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <ToolBar x:Name="toolBar1" VerticalAlignment="Top" Height="60">
+        <ToolBar x:Name="toolBar1" VerticalAlignment="Top" Height="60" Grid.Row="1">
             <Button x:Name="OpenFolder" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="{Binding ActualHeight, ElementName=OpenFolder, Mode=OneWay}" Click="OpenFolder_Click">
                 <Viewbox Stretch="Uniform">
                     <Rectangle Width="16 " Height="16">
@@ -125,7 +125,12 @@
             </Button>
             <Button Content="Button" VerticalAlignment="Top" Height="40" Width="126" Click="Button_Click" HorizontalAlignment="Left"/>
         </ToolBar>
-        <ToolBar x:Name="toolBar2" Height="30" RenderTransformOrigin="-0.18,-0.49" Canvas.Top="64" VerticalAlignment="Top" Margin="0,58,0,0" HorizontalContentAlignment="Left">
+        <ToolBar x:Name="toolBar2" 
+                 Height="30" 
+                 RenderTransformOrigin="-0.18,-0.49" 
+                 Canvas.Top="64" VerticalAlignment="Top" 
+                 HorizontalContentAlignment="Left"
+                 Grid.Row="2">
             <Button x:Name="button6" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="{Binding ActualHeight, ElementName=button6, Mode=OneWay}">
                 <Viewbox Stretch="Uniform">
                     <Canvas Width="24" Height="24" MinHeight="18">
@@ -135,15 +140,22 @@
             </Button>
             <TextBox x:Name="Path_TextBox" TextWrapping="Wrap" Text="TextBox" HorizontalContentAlignment="Stretch" MinWidth="0" VerticalContentAlignment="Top" HorizontalAlignment="Left" Width="679" IsReadOnly="True"/>
         </ToolBar>
-        <DataGrid x:Name="FileExplorer" Margin="0,88,0,0" AutoGenerateColumns="False"
+        <ScrollViewer Name="scrollviewLog" 
+                      Margin="0,30,0,0" 
+                      Grid.Row="3" 
+                      VerticalContentAlignment="Stretch" 
+                      VerticalAlignment="Stretch"
+                      Height="auto">
+            <DataGrid x:Name="FileExplorer" AutoGenerateColumns="False"
                   EnableColumnVirtualization="True"
-                  EnableRowVirtualization="True">
-            <DataGrid.Columns>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Name}" Header="Name" Width="auto"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Length}" Header="Length" Width="auto"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Extension}" Header="Type" Width="auto"/>
-            </DataGrid.Columns>
-        </DataGrid>
+                  EnableRowVirtualization="True" VerticalContentAlignment="Stretch" >
+                <DataGrid.Columns>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Name}" Header="Name" Width="auto"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Length}" Header="Length" Width="auto"/>
+                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Extension}" Header="Type" Width="auto"/>
+                </DataGrid.Columns>
+            </DataGrid>
+        </ScrollViewer>
 
     </Grid>
 </Window>
