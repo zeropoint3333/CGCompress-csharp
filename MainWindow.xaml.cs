@@ -20,7 +20,7 @@ namespace CGCompress
 {
     public partial class MainWindow : System.Windows.Window
     {
-        public static class common
+        private static class common
         {
             static String path = (@"E:\test");
             
@@ -37,21 +37,28 @@ namespace CGCompress
             this.Path_TextBox.Text = common.Path;
             FileSystemInfo[] fileinfo = folder.GetFileSystemInfos();
             FileExplorer.ItemsSource = fileinfo;
+            
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private async void Button_Click(object sender, RoutedEventArgs e)
         {
             Mat img1 = Cv2.ImRead(@"resource\01.png");
             Mat img2 = Cv2.ImRead(@"resource\03.png");
 
             Mat diff = ImageTool.Subtract_Mold(img2, img1);
             Mat add = ImageTool.Add_Mold(diff, diff);
-            MessageBox.Show(ImageTool.zerorate(img1).ToString()+"+"+ ImageTool.zerorate(diff).ToString());
+            //MessageBox.Show(ImageTool.zerorate(img1).ToString()+"+"+ ImageTool.zerorate(diff).ToString());
             //Cv2.ImShow("image", add);1, add);
             //png jp2 webp压缩率依次升高
-
-            Cv2.WaitKey(0);
+            ProgressDialog progressDialog = new ProgressDialog(100);
+            progressDialog.ShowDialog();
+            
+            //MessageBox.Show(progressDialog.CurrentProgress.ToString());
+            //Cv2.WaitKey(0);
         }
+
+
+
 
         private void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
@@ -71,8 +78,6 @@ namespace CGCompress
         {
             DirectoryInfo folder = new DirectoryInfo(common.Path);
             ArrayList imgpaths = new ArrayList();
-
-            
 
             //读取所有图片格式的文件，包括jpg png jpeg tiff
             foreach (FileInfo file in folder.GetFileSystemInfos("*.jpg"))
@@ -96,8 +101,6 @@ namespace CGCompress
                 imgpaths.Add(file.FullName);
             }
             ImagePack.Compress(imgpaths, 3, this.Path_TextBox.Text, "png");
-            //foreach (String file in imgpath) MessageBox.Show(file);
-
 
         }
     }

@@ -13,7 +13,10 @@
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <ToolBar x:Name="toolBar1" VerticalAlignment="Top" Height="60" Grid.Row="1">
-            <Button x:Name="OpenFolder" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="{Binding ActualHeight, ElementName=OpenFolder, Mode=OneWay}" Click="OpenFolder_Click">
+            <Button x:Name="OpenFolder" 
+                    HorizontalAlignment="Left" VerticalAlignment="Stretch" 
+                    Width="{Binding ActualHeight, ElementName=OpenFolder, Mode=OneWay}" 
+                    Click="OpenFolder_Click">
                 <Viewbox Stretch="Uniform">
                     <Rectangle Width="16 " Height="16">
                         <Rectangle.Resources>
@@ -41,6 +44,7 @@
                         </Rectangle.Fill>
                     </Rectangle>
                 </Viewbox>
+
             </Button>
             <Button x:Name="Search" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="{Binding ActualHeight, ElementName=Search, Mode=OneWay}">
                 <Viewbox Stretch="Uniform">
@@ -140,22 +144,19 @@
             </Button>
             <TextBox x:Name="Path_TextBox" TextWrapping="Wrap" Text="TextBox" HorizontalContentAlignment="Stretch" MinWidth="0" VerticalContentAlignment="Top" HorizontalAlignment="Left" Width="679" IsReadOnly="True"/>
         </ToolBar>
-        <ScrollViewer Name="scrollviewLog" 
-                      Margin="0,30,0,0" 
-                      Grid.Row="3" 
-                      VerticalContentAlignment="Stretch" 
-                      VerticalAlignment="Stretch"
-                      Height="auto">
-            <DataGrid x:Name="FileExplorer" AutoGenerateColumns="False"
+        <DataGrid x:Name="FileExplorer" AutoGenerateColumns="False"
                   EnableColumnVirtualization="True"
-                  EnableRowVirtualization="True" VerticalContentAlignment="Stretch" >
-                <DataGrid.Columns>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Name}" Header="Name" Width="auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Length}" Header="Length" Width="auto"/>
-                    <DataGridTextColumn IsReadOnly="True" Binding="{Binding Extension}" Header="Type" Width="auto"/>
-                </DataGrid.Columns>
-            </DataGrid>
-        </ScrollViewer>
-
+                  EnableRowVirtualization="True"
+                  VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Visible"
+                  Margin="0,30,0,0" 
+                  Grid.Row="3" 
+                  VerticalAlignment="Stretch"
+                  Height="auto">
+            <DataGrid.Columns>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Name}" Header="Name" Width="auto"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Length}" Header="Length" Width="auto"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Extension}" Header="Type" Width="auto"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>

@@ -14,6 +14,9 @@ namespace CGCompress
     {
         public static int Compress(ArrayList imglist, int cycletimes, String outpath, String imgtype)
         {
+            ProgressDialog progressDialog = new ProgressDialog(imglist.Count);
+            progressDialog.ShowDialog();
+
             //Initialization DataTable
             DataTable Pictures = new DataTable();
             DataColumn name = new DataColumn("Name", typeof(String));
@@ -97,6 +100,7 @@ namespace CGCompress
                 Pictures.Rows.Add(name_img, father_img, origin_size_img);
             }
 
+            progressDialog.Close();
             DataSet ds = new DataSet("Compress_Info");
             ds.Tables.Add(Pictures);
             ds.WriteXml(outpath + (@"/compress_info.xml"));
