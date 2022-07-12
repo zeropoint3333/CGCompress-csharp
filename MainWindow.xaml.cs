@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -23,7 +24,7 @@ namespace CGCompress
         private static class common
         {
             static String path = (@"E:\test");
-            
+
             public static string Path
             {
                 get { return path; }
@@ -37,10 +38,10 @@ namespace CGCompress
             this.Path_TextBox.Text = common.Path;
             FileSystemInfo[] fileinfo = folder.GetFileSystemInfos();
             FileExplorer.ItemsSource = fileinfo;
-            
+
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
             Mat img1 = Cv2.ImRead(@"resource\01.png");
             Mat img2 = Cv2.ImRead(@"resource\03.png");
@@ -50,11 +51,18 @@ namespace CGCompress
             //MessageBox.Show(ImageTool.zerorate(img1).ToString()+"+"+ ImageTool.zerorate(diff).ToString());
             //Cv2.ImShow("image", add);1, add);
             //png jp2 webp压缩率依次升高
-            ProgressDialog progressDialog = new ProgressDialog(100);
-            progressDialog.ShowDialog();
-            
+            test();
+
             //MessageBox.Show(progressDialog.CurrentProgress.ToString());
             //Cv2.WaitKey(0);
+        }
+
+        public async void test()
+        {
+            ProgressDialog progressDialog = new ProgressDialog(1000);
+            progressDialog.ShowDialog();
+
+            //MessageBox.Show(progressDialog.progressbar.Value.ToString());
         }
 
 
@@ -81,6 +89,10 @@ namespace CGCompress
 
             //读取所有图片格式的文件，包括jpg png jpeg tiff
             foreach (FileInfo file in folder.GetFileSystemInfos("*.jpg"))
+            {
+                imgpaths.Add(file.FullName);
+            }
+            foreach (FileInfo file in folder.GetFileSystemInfos("*.bmp"))
             {
                 imgpaths.Add(file.FullName);
             }

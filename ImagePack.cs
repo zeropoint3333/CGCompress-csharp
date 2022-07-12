@@ -12,10 +12,8 @@ namespace CGCompress
 {
     internal class ImagePack
     {
-        public static int Compress(ArrayList imglist, int cycletimes, String outpath, String imgtype)
+        public async static void Compress(ArrayList imglist, int cycletimes, String outpath, String imgtype)
         {
-            ProgressDialog progressDialog = new ProgressDialog(imglist.Count);
-            progressDialog.ShowDialog();
 
             //Initialization DataTable
             DataTable Pictures = new DataTable();
@@ -41,71 +39,89 @@ namespace CGCompress
             int cols = (img1.Cols);
             int rows = (img1.Rows);
             origin_size_img = rows * cols * img1.Channels();
-            Pictures.Rows.Add(name_img,father_img,origin_size_img);
+            Pictures.Rows.Add(name_img, father_img, origin_size_img);
+
+            img1.ImWrite(@"\Compress\1." + imgtype);
             img1.Release();
 
             double similarate;
 
+            ProgressDialog progressDialog = new ProgressDialog(imglist.Count);
+            progressDialog.Show();
 
-            for (int i = 1; i < imglist.Count; i++)
-            {
-                //Set default value
-                fullname_img = imglist[i].ToString();
-                name_img = fullname_img.Substring(fullname_img.LastIndexOf("/") + 1, fullname_img.LastIndexOf(".") - fullname_img.LastIndexOf("/") - 1);
-                father_img = -1;
-                img1 = Cv2.ImRead(fullname_img);
-                cols = (img1.Cols);
-                rows = (img1.Rows);
-                origin_size_img = rows * cols * img1.Channels();
-                similarate = 0;
-                int k = 1;
-
-                //Find main picture
-                
-                for (int j = 1; j < i + 1; j++)
+            Action doCompress =
+                () =>
                 {
-                    //Filter correct main pictures
-                    if ((Int32)Pictures.Rows[i - j][1] >= 0 || (Int32)Pictures.Rows[i - j][2] != origin_size_img)
-                        continue;
-
-                    //Make a difference in reverse order
-                    Mat img2 = Cv2.ImRead(imglist[i - j].ToString());
-                    Mat imgdiff = ImageTool.Subtract_Mold(img1, img2);
-                    double zerorate = ImageTool.zerorate(imgdiff);
-
-                    if (zerorate > similarate && zerorate > 0.8)
+                    for (int i = 1; i < imglist.Count; i++)
                     {
-                        similarate = zerorate;
-                        father_img = i - j;
-                        break;
-                    }
-                    else
-                    {
-                        if (zerorate > similarate && zerorate > 0.5)
+                        progressDialog.data.CurrentProgress = i;
+                        //Set default value
+                        fullname_img = imglist[i].ToString();
+                        name_img = fullname_img.Substring(fullname_img.LastIndexOf("/") + 1, fullname_img.LastIndexOf(".") - fullname_img.LastIndexOf("/") - 1);
+                        father_img = -1;
+                        img1 = Cv2.ImRead(fullname_img);
+                        cols = (img1.Cols);
+                        rows = (img1.Rows);
+                        origin_size_img = rows * cols * img1.Channels();
+                        similarate = 0;
+                        int k = 1;
+
+                        //Find main picture
+                        for (int j = 1; j < i + 1; j++)
                         {
-                            similarate = zerorate;
-                            father_img = i - j;
+                            //Filter correct main pictures
+                            if ((Int32)Pictures.Rows[i - j][1] >= 0 || (Int32)Pictures.Rows[i - j][2] != origin_size_img)
+                                continue;
+
+                            //Make a difference in reverse order
+                            Mat img2 = Cv2.ImRead(imglist[i - j].ToString());
+                            Mat imgdiff = ImageTool.Subtract_Mold(img1, img2);
+                            double zerorate = ImageTool.zerorate(imgdiff);
+
+                            if (zerorate > similarate && zerorate > 0.8)
+                            {
+                                similarate = zerorate;
+                                father_img = i - j;
+                                break;
+                            }
+                            else
+                            {
+                                if (zerorate > similarate && zerorate > 0.5)
+                                {
+                                    similarate = zerorate;
+                                    father_img = i - j;
+                                }
+                                if (k > cycletimes) break;
+                            }
+                            k++;
+                            img2.Release();
+                            imgdiff.Release();
                         }
-                        if (k > cycletimes) break;
+                        //if ((Int32)Pictures.Rows[i][1] <0)
+                        //{
+                        //    img1.ImWrite((@"/Compress/")+i.ToString()+".png");
+                        //}
+                        //else
+                        //{
+                        //    Mat img2 =Cv2.ImRead((String)Pictures.Rows[(Int32)Pictures.Rows[i][1]][0]);
+                        //    Mat img1_diff = ImageTool.Subtract_Mold(img1, img2);
+                        //    img1_diff.ImWrite((@"/Compress/") + i.ToString() + ".png");
+                        //}
+                        img1.Release();
+                        GC.Collect();
+                        //Result
+                        Pictures.Rows.Add(name_img, father_img, origin_size_img);
                     }
-                    k++;
 
-                    img2.Release();
-                    imgdiff.Release();
-                    
-                }
-                img1.Release();
-                GC.Collect();
-                //Result
-                Pictures.Rows.Add(name_img, father_img, origin_size_img);
-            }
-
-            progressDialog.Close();
+                };
+            await Task.Run(doCompress);
             DataSet ds = new DataSet("Compress_Info");
             ds.Tables.Add(Pictures);
-            ds.WriteXml(outpath + (@"/compress_info.xml"));
+            ds.WriteXml(outpath + @"\compress_info.xml");
+            progressDialog.Close();
+            System.Windows.MessageBox.Show("完成压缩！");
 
-            return 0;
+            return;
         }
     }
 }

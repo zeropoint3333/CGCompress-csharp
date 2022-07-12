@@ -26,6 +26,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Page Remove="Compress.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <EmbeddedResource Include="resource\02.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </EmbeddedResource>

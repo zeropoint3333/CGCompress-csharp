@@ -10,19 +10,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.ComponentModel;
+using System.Threading;
 
 namespace CGCompress
 {
     /// <summary>
-    /// Compress.xaml 的交互逻辑
+    /// ProgressDialog.xaml 的交互逻辑
     /// </summary>
-    public partial class Compress : UserControl
+    public partial class ProgressDialog : Window
     {
-        public Compress()
+        public ViewModels.ProgressDialogViewModel data= new ViewModels.ProgressDialogViewModel();
+        public ProgressDialog(int the_max)
         {
+            this.ResizeMode = ResizeMode.CanMinimize;
             InitializeComponent();
+            data.Max = the_max;
+            this.DataContext = data;
         }
     }
 }
