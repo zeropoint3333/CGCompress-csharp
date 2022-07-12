@@ -61,12 +61,7 @@ namespace CGCompress
         {
             ProgressDialog progressDialog = new ProgressDialog(1000);
             progressDialog.ShowDialog();
-
-            //MessageBox.Show(progressDialog.progressbar.Value.ToString());
         }
-
-
-
 
         private void OpenFolder_Click(object sender, RoutedEventArgs e)
         {
@@ -112,7 +107,7 @@ namespace CGCompress
             {
                 imgpaths.Add(file.FullName);
             }
-            ImagePack.Compress(imgpaths, 3, this.Path_TextBox.Text, "png");
+            ImagePack.Compress(imgpaths, 3, this.Path_TextBox.Text, ".png");
 
         }
     }
