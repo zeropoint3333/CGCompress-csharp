@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove=".editorconfig" />
     <None Remove="resource\01.png" />
     <None Remove="resource\02.png" />
     <None Remove="resource\03.png" />
@@ -53,6 +54,14 @@
 
   <ItemGroup>
     <Page Include="App.xaml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="D:\Program\CGCompress\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="D:\Program\CGCompress\.editorconfig" />
   </ItemGroup>
 
 </Project>

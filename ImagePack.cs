@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OpenCvSharp;
@@ -34,7 +33,7 @@ namespace CGCompress
             //Set first picture info
             fullname_img = imglist[0].ToString();
             img1 = Cv2.ImRead(fullname_img);
-            name_img = fullname_img.Substring(fullname_img.LastIndexOf("/") + 1, fullname_img.LastIndexOf(".") - fullname_img.LastIndexOf("/") - 1);
+            name_img = fullname_img.Substring(fullname_img.LastIndexOf("\\") + 1, fullname_img.LastIndexOf(".") - fullname_img.LastIndexOf("\\") - 1);
             father_img = -1;
             int cols = (img1.Cols);
             int rows = (img1.Rows);
@@ -44,7 +43,7 @@ namespace CGCompress
             string pathString = System.IO.Path.Combine(outpath);
             System.IO.Directory.CreateDirectory(pathString);
             img1.ImWrite(outpath + "\\0" + imgtype);
-            
+
             img1.Release();
             double similarate;
 
@@ -59,7 +58,7 @@ namespace CGCompress
                         progressDialog.data.CurrentProgress = i;
                         //Set default value
                         fullname_img = imglist[i].ToString();
-                        name_img = fullname_img.Substring(fullname_img.LastIndexOf("/") + 1, fullname_img.LastIndexOf(".") - fullname_img.LastIndexOf("/") - 1);
+                        name_img = fullname_img.Substring(fullname_img.LastIndexOf("\\") + 1, fullname_img.LastIndexOf(".") - fullname_img.LastIndexOf("\\") - 1);
                         father_img = -1;
                         img1 = Cv2.ImRead(fullname_img);
                         cols = (img1.Cols);
@@ -104,7 +103,7 @@ namespace CGCompress
                         Pictures.Rows.Add(name_img, father_img, origin_size_img);
                         if ((Int32)Pictures.Rows[i][1] < 0)
                         {
-                            img1.ImWrite(outpath+"\\" + i.ToString() + imgtype);
+                            img1.ImWrite(outpath + "\\" + i.ToString() + imgtype);
                         }
                         else
                         {
@@ -114,7 +113,7 @@ namespace CGCompress
                         }
                         img1.Release();
                         GC.Collect();
-                        
+
                     }
 
                 };
@@ -126,6 +125,58 @@ namespace CGCompress
             System.Windows.MessageBox.Show("完成压缩！");
 
             return;
+        }
+
+        public async static void Decompress(String infopath, String outpath, String outputImageType)
+        {
+            string pathString = System.IO.Path.Combine(outpath);
+            System.IO.Directory.CreateDirectory(pathString);
+            DataSet ds = new DataSet();
+            ds.ReadXml(infopath + "\\compress_info.xml");
+            DataTable Pictures = ds.Tables[0];
+            String inputImageType;
+            if (File.Exists(infopath + "//1.png")) inputImageType = ".png";
+            else
+            {
+                if (File.Exists(infopath + "//1.webp")) inputImageType = ".webp";
+                else
+                {
+                    if (File.Exists(infopath + "//1.jp2")) inputImageType = ".jp2";
+                    else
+                    {
+                        if (File.Exists(infopath + "//1.tiff")) inputImageType = ".tiff";
+                        else return;
+                    }
+                }
+            }
+
+            ProgressDialog progressDialog = new ProgressDialog(Pictures.Rows.Count);
+            progressDialog.Show();
+
+            Action doCompress =
+                () =>
+                {
+                    for (int i = 0; i < Pictures.Rows.Count; i++)
+                    {
+                        progressDialog.data.CurrentProgress = i;
+                        Mat img1 = Cv2.ImRead(infopath +"\\"+i.ToString() + inputImageType);
+                        if (Convert.ToInt32((String)Pictures.Rows[i]["Father"])< 0)
+                        {
+                            Cv2.ImWrite(outpath + "\\" + (string)Pictures.Rows[i]["Name"] + inputImageType, img1);
+                        }
+                        else
+                        {
+                            Mat img2 = Cv2.ImRead(infopath + "\\"+(string)Pictures.Rows[i]["Father"] + inputImageType);
+                            Cv2.ImWrite(outpath + "\\" + (string)Pictures.Rows[i]["Name"] + inputImageType, ImageTool.Add_Mold(img2, img1));
+                        }
+                        img1.Release();
+                        GC.Collect();
+                    }
+                };
+            await Task.Run(doCompress);
+
+            progressDialog.Close();
+            System.Windows.MessageBox.Show("完成解压缩！");
         }
     }
 }

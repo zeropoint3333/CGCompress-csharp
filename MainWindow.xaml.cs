@@ -110,5 +110,17 @@ namespace CGCompress
                 ImagePack.Compress(imgpaths, Convert.ToInt32(compressConfig.subtracttimes.Text), compressConfig.outpath.Text,"."+compressConfig.Format.Content);
             }
         }
+
+        private void Extract_Click(object sender, RoutedEventArgs e)
+        {
+            if(!File.Exists(this.Path_TextBox.Text + "\\compress_info.xml"))
+            {
+                MessageBox.Show("该目录下无压缩信息");
+            }
+            else
+            {
+                ImagePack.Decompress(this.Path_TextBox.Text, this.Path_TextBox.Text + "\\CGDecompress",".png");
+            }
+        }
     }
 }
