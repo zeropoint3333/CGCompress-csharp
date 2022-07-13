@@ -51,16 +51,8 @@ namespace CGCompress
             //MessageBox.Show(ImageTool.zerorate(img1).ToString()+"+"+ ImageTool.zerorate(diff).ToString());
             //Cv2.ImShow("image", add);1, add);
             //png jp2 webp压缩率依次升高
-            test();
 
-            //MessageBox.Show(progressDialog.CurrentProgress.ToString());
             //Cv2.WaitKey(0);
-        }
-
-        public async void test()
-        {
-            ProgressDialog progressDialog = new ProgressDialog(1000);
-            progressDialog.ShowDialog();
         }
 
         private void OpenFolder_Click(object sender, RoutedEventArgs e)
@@ -107,8 +99,16 @@ namespace CGCompress
             {
                 imgpaths.Add(file.FullName);
             }
-            ImagePack.Compress(imgpaths, 3, this.Path_TextBox.Text, ".png");
-
+            foreach (FileInfo file in folder.GetFileSystemInfos("*.tiff"))
+            {
+                imgpaths.Add(file.FullName);
+            }
+            Views.CompressConfigDialog compressConfig = new Views.CompressConfigDialog(this.Path_TextBox.Text);
+            if (compressConfig.ShowDialog() == true)
+            {
+                
+                ImagePack.Compress(imgpaths, Convert.ToInt32(compressConfig.subtracttimes.Text), compressConfig.outpath.Text,"."+compressConfig.Format.Content);
+            }
         }
     }
 }

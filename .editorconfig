@@ -1,0 +1,4 @@
+﻿[*.cs]
+
+# IDE0027: 使用访问器的表达式主体
+csharp_style_expression_bodied_accessors = false

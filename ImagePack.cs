@@ -41,9 +41,9 @@ namespace CGCompress
             origin_size_img = rows * cols * img1.Channels();
             Pictures.Rows.Add(name_img, father_img, origin_size_img);
 
-            string pathString = System.IO.Path.Combine(outpath + "\\CGCompress");
+            string pathString = System.IO.Path.Combine(outpath);
             System.IO.Directory.CreateDirectory(pathString);
-            img1.ImWrite(outpath + "\\CGCompress\\0" + imgtype);
+            img1.ImWrite(outpath + "\\0" + imgtype);
             
             img1.Release();
             double similarate;
@@ -104,13 +104,13 @@ namespace CGCompress
                         Pictures.Rows.Add(name_img, father_img, origin_size_img);
                         if ((Int32)Pictures.Rows[i][1] < 0)
                         {
-                            img1.ImWrite(outpath+"\\CGCompress\\" + i.ToString() + imgtype);
+                            img1.ImWrite(outpath+"\\" + i.ToString() + imgtype);
                         }
                         else
                         {
                             Mat img2 = Cv2.ImRead((String)imglist[(Int32)Pictures.Rows[i][1]]);
                             Mat img1_diff = ImageTool.Subtract_Mold(img1, img2);
-                            img1_diff.ImWrite(outpath + "\\CGCompress\\" + i.ToString() + imgtype);
+                            img1_diff.ImWrite(outpath + "\\" + i.ToString() + imgtype);
                         }
                         img1.Release();
                         GC.Collect();
@@ -121,7 +121,7 @@ namespace CGCompress
             await Task.Run(doCompress);
             DataSet ds = new DataSet("Compress_Info");
             ds.Tables.Add(Pictures);
-            ds.WriteXml(outpath + "\\CGCompress\\" + "compress_info.xml");
+            ds.WriteXml(outpath + "\\compress_info.xml");
             progressDialog.Close();
             System.Windows.MessageBox.Show("完成压缩！");
 

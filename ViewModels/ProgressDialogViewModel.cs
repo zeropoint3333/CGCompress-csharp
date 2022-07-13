@@ -32,9 +32,6 @@ namespace CGCompress.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("TextString"));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs("CurrentProgress"));
         }
-
-        private string textString = "";
-
         
 
         public string TextString
