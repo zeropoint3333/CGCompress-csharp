@@ -74,10 +74,11 @@ namespace CGCompress
                             if ((Int32)Pictures.Rows[i - j][1] >= 0 || (Int32)Pictures.Rows[i - j][2] != origin_size_img)
                                 continue;
 
-                            //Make a difference in reverse order
+                            //Make a difference in reverse order (not need use Modulo operation)
                             Mat img2 = Cv2.ImRead(imglist[i - j].ToString());
-                            Mat imgdiff = ImageTool.Subtract_Mold(img1, img2);
-                            double zerorate = ImageTool.zerorate(imgdiff);
+                            Mat imgdiff1 = ImageTool.Subtract_Mold(img1,img2);
+                            
+                            double zerorate = (ImageTool.zerorate(imgdiff1));
 
                             if (zerorate > similarate && zerorate > 0.8)
                             {
@@ -95,25 +96,22 @@ namespace CGCompress
                                 if (k > cycletimes) break;
                             }
                             k++;
-                            img2.Release();
-                            imgdiff.Release();
                         }
 
                         //Result
                         Pictures.Rows.Add(name_img, father_img, origin_size_img);
-                        if ((Int32)Pictures.Rows[i][1] < 0)
+                        if (father_img < 0)
                         {
                             img1.ImWrite(outpath + "\\" + i.ToString() + imgtype);
                         }
                         else
                         {
-                            Mat img2 = Cv2.ImRead((String)imglist[(Int32)Pictures.Rows[i][1]]);
+                            Mat img2 = Cv2.ImRead((String)imglist[father_img]);
+                            //Make a difference by Modulo operation
                             Mat img1_diff = ImageTool.Subtract_Mold(img1, img2);
                             img1_diff.ImWrite(outpath + "\\" + i.ToString() + imgtype);
                         }
-                        img1.Release();
                         GC.Collect();
-
                     }
 
                 };

@@ -74,35 +74,13 @@ namespace CGCompress
             DirectoryInfo folder = new DirectoryInfo(common.Path);
             ArrayList imgpaths = new ArrayList();
 
-            //读取所有图片格式的文件，包括jpg png jpeg tiff
-            foreach (FileInfo file in folder.GetFileSystemInfos("*.jpg"))
+            //读取所有图片格式的文件，包括jpg png jpeg等
+            foreach (FileInfo file in folder.GetFiles())
             {
+                if(new System.Text.RegularExpressions.Regex(@"([^\s]+(\.(?i)(jpg|jpeg|png|bmp|webp|jp2|tiff))$)").IsMatch(file.Name))
                 imgpaths.Add(file.FullName);
             }
-            foreach (FileInfo file in folder.GetFileSystemInfos("*.bmp"))
-            {
-                imgpaths.Add(file.FullName);
-            }
-            foreach (FileInfo file in folder.GetFileSystemInfos("*.png"))
-            {
-                imgpaths.Add(file.FullName);
-            }
-            foreach (FileInfo file in folder.GetFileSystemInfos("*.jpeg"))
-            {
-                imgpaths.Add(file.FullName);
-            }
-            foreach (FileInfo file in folder.GetFileSystemInfos("*.jp2"))
-            {
-                imgpaths.Add(file.FullName);
-            }
-            foreach (FileInfo file in folder.GetFileSystemInfos("*.webp"))
-            {
-                imgpaths.Add(file.FullName);
-            }
-            foreach (FileInfo file in folder.GetFileSystemInfos("*.tiff"))
-            {
-                imgpaths.Add(file.FullName);
-            }
+
             Views.CompressConfigDialog compressorConfig = new Views.CompressConfigDialog(this.Path_TextBox.Text);
             if (compressorConfig.ShowDialog() == true)
             {
@@ -125,6 +103,35 @@ namespace CGCompress
                     ImagePack.Decompress(this.Path_TextBox.Text,decompressorConfig.outpath.Text,"."+decompressorConfig.Format.Content);
                 }
                 GC.Collect();
+            }
+        }
+
+        private void SeeImage_Click(object sender, RoutedEventArgs e)
+        {
+            if (FileExplorer.SelectedCells.Count == 0) return;
+            String imgname = (FileExplorer.Columns[0].GetCellContent(FileExplorer.Items[this.FileExplorer.SelectedIndex]) as TextBlock).Text;
+            if (File.Exists(this.Path_TextBox.Text + "\\compress_info.xml"))
+            {
+                System.Data.DataSet ds = new System.Data.DataSet();
+                ds.ReadXml(this.Path_TextBox.Text + "\\compress_info.xml");
+                System.Data.DataTable Pictures = ds.Tables[0];
+                int index = Convert.ToInt32(imgname.Substring(0,imgname.IndexOf(".")));
+                string imgtype = imgname.Substring(imgname.IndexOf("."),imgname.Length-imgname.IndexOf("."));
+                Mat img1 = Cv2.ImRead(this.Path_TextBox.Text + "\\" + index.ToString() + imgtype);
+                if (Convert.ToInt32((String)Pictures.Rows[index]["Father"]) < 0)
+                {
+                    Cv2.ImShow("image" , img1);
+                }
+                else
+                {
+                    Mat img2 = Cv2.ImRead(this.Path_TextBox.Text + "\\" + (string)Pictures.Rows[index]["Father"] + imgtype);
+                    Cv2.ImShow("image", ImageTool.Add_Mold(img2, img1));
+                }
+                img1.Release();
+            }
+            else
+            {
+                Cv2.ImShow("image", Cv2.ImRead(this.Path_TextBox.Text+"\\"+imgname));
             }
         }
     }

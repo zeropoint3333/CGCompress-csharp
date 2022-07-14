@@ -92,7 +92,7 @@
                     </Canvas>
                 </Viewbox>
             </Button>
-            <Button x:Name="SeeImage" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="{Binding ActualHeight, ElementName=SeeImage, Mode=OneWay}">
+            <Button x:Name="SeeImage" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="{Binding ActualHeight, ElementName=SeeImage, Mode=OneWay}" Click="SeeImage_Click">
                 <Viewbox>
                     <Canvas Width="58" Height="58" MinHeight="18">
                         <Path Fill="Black" Data="F1 M58,58z M0,0z M42.108485,37.786732C41.865835,37.757973 41.620489,37.739101 41.370649,37.739101 40.929386,37.739101 40.499805,37.786732 40.084604,37.874805 35.955062,38.408635 32.151749,41.067 29.244443,45.506595L28.825647,46.145573 29.148282,46.638062C32.41417,51.626765 36.813324,54.375 41.535111,54.375 46.256,54.375 50.655153,51.626765 53.92194,46.638062L54.340736,45.999084 54.018101,45.506595C50.861855,40.68595,46.647834,37.965574,42.108483,37.786732z M45.782385,43.947344C45.782385,46.380134 43.80344,48.359079 41.37065,48.359079 38.93786,48.359079 36.958915,46.380134 36.958915,43.947344 36.958915,41.841682 38.443573,40.081122 40.420721,39.644352 40.821543,39.596721 41.225061,39.566165 41.632173,39.566165 41.654641,39.566165 41.677108,39.567962 41.699576,39.568861 43.975992,39.740513 45.782386,41.626892 45.782386,43.947344z M41.535113,52.577593C37.592501,52.577593 33.861983,50.297582 30.98074,46.141978 32.381819,44.087542 33.989599,42.485154 35.725894,41.375255 35.366413,42.160722 35.16061,43.029768 35.16061,43.948243 35.16061,47.372303 37.946591,50.157385 41.369752,50.157385 44.792913,50.157385 47.578894,47.371404 47.578894,43.948243 47.578894,42.85542 47.293106,41.829999 46.795225,40.936688 48.775967,42.021423 50.607525,43.72896 52.183851,46.002679 49.290925,50.246357 45.521762,52.577593 41.535114,52.577593z" />
@@ -131,7 +131,6 @@
         </ToolBar>
         <ToolBar x:Name="toolBar2" 
                  Height="30" 
-                 RenderTransformOrigin="-0.18,-0.49" 
                  Canvas.Top="64" VerticalAlignment="Top" 
                  HorizontalContentAlignment="Left"
                  Grid.Row="2">
@@ -151,7 +150,7 @@
                   Margin="0,30,0,0" 
                   Grid.Row="3" 
                   VerticalAlignment="Stretch"
-                  Height="auto">
+                  Height="auto" SelectionMode="Single">
             <DataGrid.Columns>
                 <DataGridTextColumn IsReadOnly="True" Binding="{Binding Name}" Header="Name" Width="auto"/>
                 <DataGridTextColumn IsReadOnly="True" Binding="{Binding Length}" Header="Length" Width="auto"/>
