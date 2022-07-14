@@ -41,6 +41,7 @@ namespace CGCompress
 
             Mat diff = ImageTool.Subtract_Mold(img2, img1);
             Mat add = ImageTool.Add_Mold(diff, diff);
+
             //MessageBox.Show(ImageTool.zerorate(img1).ToString()+"+"+ ImageTool.zerorate(diff).ToString());
             //Cv2.ImShow("image", add);1, add);
             //png jp2 webp压缩率依次升高
@@ -70,12 +71,15 @@ namespace CGCompress
                 imgpaths.Add(file.FullName);
             }
 
+            if (imgpaths.Count == 0) return;
+
             Views.CompressConfigDialog compressorConfig = new Views.CompressConfigDialog(mainWindowViewModel.Path);
             if (compressorConfig.ShowDialog() == true)
             {
                 ImagePack.Compress(imgpaths, Convert.ToInt32(compressorConfig.subtracttimes.Text), compressorConfig.outpath.Text,"."+compressorConfig.Format.Content);
             }
             GC.Collect();
+            mainWindowViewModel.Path = mainWindowViewModel.Path;
         }
 
         private void Extract_Click(object sender, RoutedEventArgs e)
@@ -92,6 +96,7 @@ namespace CGCompress
                     ImagePack.Decompress(mainWindowViewModel.Path, decompressorConfig.outpath.Text,"."+decompressorConfig.Format.Content);
                 }
                 GC.Collect();
+                mainWindowViewModel.Path = mainWindowViewModel.Path;
             }
         }
 
@@ -101,6 +106,7 @@ namespace CGCompress
             if (FileExplorer.SelectedCells.Count == 0) return;
 
             String imgname = (FileExplorer.Columns[0].GetCellContent(FileExplorer.Items[this.FileExplorer.SelectedIndex]) as TextBlock).Text;
+
             if (File.Exists(mainWindowViewModel.Path + "\\compress_info.xml"))
             {
                 System.Data.DataSet ds = new System.Data.DataSet();
@@ -134,6 +140,7 @@ namespace CGCompress
 
         private void MoveUp_Click(object sender, RoutedEventArgs e)
         {
+            if (mainWindowViewModel.Path.LastIndexOf("\\") < 0) return;
             mainWindowViewModel.Path = mainWindowViewModel.Path.Substring(0, mainWindowViewModel.Path.LastIndexOf("\\"));
         }
     }

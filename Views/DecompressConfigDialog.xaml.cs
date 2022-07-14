@@ -22,7 +22,7 @@ namespace CGCompress.Views
         public DecompressConfigDialog(string inputpath)
         {
             InitializeComponent();
-            this.DataContext = new ViewModels.CompressConfigDialogViewModel();
+            this.DataContext = new ViewModels.DecompressConfigDialogViewModel();
             outpath.Text = inputpath + "\\CGCompress";
         }
 
