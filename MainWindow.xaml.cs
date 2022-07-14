@@ -103,12 +103,12 @@ namespace CGCompress
             {
                 imgpaths.Add(file.FullName);
             }
-            Views.CompressConfigDialog compressConfig = new Views.CompressConfigDialog(this.Path_TextBox.Text);
-            if (compressConfig.ShowDialog() == true)
+            Views.CompressConfigDialog compressorConfig = new Views.CompressConfigDialog(this.Path_TextBox.Text);
+            if (compressorConfig.ShowDialog() == true)
             {
-                
-                ImagePack.Compress(imgpaths, Convert.ToInt32(compressConfig.subtracttimes.Text), compressConfig.outpath.Text,"."+compressConfig.Format.Content);
+                ImagePack.Compress(imgpaths, Convert.ToInt32(compressorConfig.subtracttimes.Text), compressorConfig.outpath.Text,"."+compressorConfig.Format.Content);
             }
+            GC.Collect();
         }
 
         private void Extract_Click(object sender, RoutedEventArgs e)
@@ -119,7 +119,12 @@ namespace CGCompress
             }
             else
             {
-                ImagePack.Decompress(this.Path_TextBox.Text, this.Path_TextBox.Text + "\\CGDecompress",".png");
+                Views.DecompressConfigDialog decompressorConfig = new Views.DecompressConfigDialog(this.Path_TextBox.Text);
+                if (decompressorConfig.ShowDialog() == true)
+                {
+                    ImagePack.Decompress(this.Path_TextBox.Text,decompressorConfig.outpath.Text,"."+decompressorConfig.Format.Content);
+                }
+                GC.Collect();
             }
         }
     }

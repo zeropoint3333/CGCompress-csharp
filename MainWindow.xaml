@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CGCompress"
         mc:Ignorable="d"
-        Title="MainWindow" Height="566" Width="1000">
+        Title="CGCompress" Height="566" Width="1000">
     <Grid x:Name="grid" VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"></RowDefinition>
