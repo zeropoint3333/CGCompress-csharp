@@ -4,10 +4,13 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CGCompress"
+        xmlns:viewmodels="clr-namespace:CGCompress.ViewModels"
+        d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
         mc:Ignorable="d"
         Title="CGCompress" Height="566" Width="1000">
     <Grid x:Name="grid" VerticalAlignment="Top">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="Auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -134,23 +137,28 @@
                  Canvas.Top="64" VerticalAlignment="Top" 
                  HorizontalContentAlignment="Left"
                  Grid.Row="2">
-            <Button x:Name="button6" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="{Binding ActualHeight, ElementName=button6, Mode=OneWay}">
+            <Button x:Name="MoveUp" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="{Binding ActualHeight, ElementName=MoveUp, Mode=OneWay}" Click="MoveUp_Click">
                 <Viewbox Stretch="Uniform">
                     <Canvas Width="24" Height="24" MinHeight="18">
                         <Path Fill="Black" Data="M13,20H11V8L5.5,13.5L4.08,12.08L12,4.16L19.92,12.08L18.5,13.5L13,8V20Z" />
                     </Canvas>
                 </Viewbox>
             </Button>
-            <TextBox x:Name="Path_TextBox" TextWrapping="Wrap" Text="TextBox" HorizontalContentAlignment="Stretch" MinWidth="0" VerticalContentAlignment="Top" HorizontalAlignment="Left" Width="679" IsReadOnly="True"/>
+            <TextBox x:Name="Path_TextBox"  Text="{Binding Path, Mode=OneWay}" HorizontalContentAlignment="Stretch" MinWidth="0" VerticalContentAlignment="Top" HorizontalAlignment="Left" Width="679" IsReadOnly="True"/>
         </ToolBar>
         <DataGrid x:Name="FileExplorer" AutoGenerateColumns="False"
                   EnableColumnVirtualization="True"
                   EnableRowVirtualization="True"
                   VerticalContentAlignment="Stretch" ScrollViewer.VerticalScrollBarVisibility="Visible"
-                  Margin="0,30,0,0" 
                   Grid.Row="3" 
                   VerticalAlignment="Stretch"
+                  ItemsSource="{Binding FileInfos}"
                   Height="auto" SelectionMode="Single">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="FileExplorerRow_DoubleClick"/>
+                </Style>
+            </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn IsReadOnly="True" Binding="{Binding Name}" Header="Name" Width="auto"/>
                 <DataGridTextColumn IsReadOnly="True" Binding="{Binding Length}" Header="Length" Width="auto"/>

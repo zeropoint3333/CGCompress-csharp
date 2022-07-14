@@ -1,67 +1,45 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWPF>true</UseWPF>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net6.0-windows</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWPF>true</UseWPF>
+		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="build-CGCompress-Desktop_Qt_5_13_2_MinGW_64_bit-Debug\**" />
-    <Compile Remove="CGCompress\**" />
-    <EmbeddedResource Remove="build-CGCompress-Desktop_Qt_5_13_2_MinGW_64_bit-Debug\**" />
-    <EmbeddedResource Remove="CGCompress\**" />
-    <None Remove="build-CGCompress-Desktop_Qt_5_13_2_MinGW_64_bit-Debug\**" />
-    <None Remove="CGCompress\**" />
-    <Page Remove="build-CGCompress-Desktop_Qt_5_13_2_MinGW_64_bit-Debug\**" />
-    <Page Remove="CGCompress\**" />
-  </ItemGroup>
+	<ItemGroup>
+		<Compile Remove="CGCompress\**" />
+		<EmbeddedResource Remove="CGCompress\**" />
+		<None Remove="CGCompress\**" />
+		<Page Remove="CGCompress\**" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Remove=".editorconfig" />
-    <None Remove="resource\01.png" />
-    <None Remove="resource\02.png" />
-    <None Remove="resource\03.png" />
-  </ItemGroup>
+	<ItemGroup>
+		<None Remove=".editorconfig" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Page Remove="Compress.xaml" />
-  </ItemGroup>
+	<ItemGroup>
+		<Page Remove="Compress.xaml" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="resource\02.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="7-Zip.CommandLine" Version="18.1.0" />
+		<PackageReference Include="OpenCvSharp4" Version="4.6.0.20220608" />
+		<PackageReference Include="OpenCvSharp4.runtime.win" Version="4.6.0.20220608" />
+		<PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Include="resource\01.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-    <EmbeddedResource Include="resource\03.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<Page Include="App.xaml" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="7-Zip.CommandLine" Version="18.1.0" />
-    <PackageReference Include="OpenCvSharp4" Version="4.6.0.20220608" />
-    <PackageReference Include="OpenCvSharp4.runtime.win" Version="4.6.0.20220608" />
-    <PackageReference Include="WindowsAPICodePack-Shell" Version="1.1.1" />
-  </ItemGroup>
+	<ItemGroup>
+		<EditorConfigFiles Remove="D:\Program\CGCompress\.editorconfig" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Page Include="App.xaml" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EditorConfigFiles Remove="D:\Program\CGCompress\.editorconfig" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <EditorConfigFiles Remove="D:\Program\CGCompress\.editorconfig" />
-  </ItemGroup>
+	<ItemGroup>
+		<EditorConfigFiles Remove="D:\Program\CGCompress\.editorconfig" />
+	</ItemGroup>
 
 </Project>
