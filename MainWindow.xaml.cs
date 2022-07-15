@@ -105,7 +105,10 @@ namespace CGCompress
             //Determine if an item is selected
             if (FileExplorer.SelectedCells.Count == 0) return;
 
-            String imgname = (FileExplorer.Columns[0].GetCellContent(FileExplorer.Items[this.FileExplorer.SelectedIndex]) as TextBlock).Text;
+            String imgname = ((FileSystemInfo)this.FileExplorer.SelectedItem).Name;
+            string imgtype = ((FileSystemInfo)this.FileExplorer.SelectedItem).Extension.ToString();
+            if (!new System.Text.RegularExpressions.Regex(@"(\.(?i)(jpg|jpeg|png|bmp|webp|jp2|tiff)$)").IsMatch(imgtype)) return;
+
 
             if (File.Exists(mainWindowViewModel.Path + "\\compress_info.xml"))
             {
@@ -113,7 +116,6 @@ namespace CGCompress
                 ds.ReadXml(mainWindowViewModel.Path + "\\compress_info.xml");
                 System.Data.DataTable Pictures = ds.Tables[0];
                 int index = Convert.ToInt32(imgname.Substring(0,imgname.IndexOf(".")));
-                string imgtype = imgname.Substring(imgname.IndexOf("."),imgname.Length-imgname.IndexOf("."));
                 Mat img1 = Cv2.ImRead(mainWindowViewModel.Path + "\\" + index.ToString() + imgtype);
                 if (Convert.ToInt32((String)Pictures.Rows[index]["Father"]) < 0)
                 {
