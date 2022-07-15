@@ -161,8 +161,9 @@
             </DataGrid.Resources>
             <DataGrid.Columns>
                 <DataGridTextColumn IsReadOnly="True" Binding="{Binding Name}" Header="Name" Width="auto"/>
-                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Length}" Header="Length" Width="auto"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding LastWriteTime}" Header="LastWriteTime" Width="auto"/>
                 <DataGridTextColumn IsReadOnly="True" Binding="{Binding Extension}" Header="Type" Width="auto"/>
+                <DataGridTextColumn IsReadOnly="True" Binding="{Binding Length}" Header="Length" Width="auto"/>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>

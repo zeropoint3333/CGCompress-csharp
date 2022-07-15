@@ -40,15 +40,15 @@ namespace CGCompress
             origin_size_img = rows * cols * img1.Channels();
             Pictures.Rows.Add(name_img, father_img, origin_size_img);
 
+            ProgressDialog progressDialog = new ProgressDialog(imglist.Count);
+            progressDialog.Show();
+
             string pathString = System.IO.Path.Combine(outpath);
             System.IO.Directory.CreateDirectory(pathString);
             img1.ImWrite(outpath + "\\0" + imgtype);
 
             img1.Release();
             double similarate;
-
-            ProgressDialog progressDialog = new ProgressDialog(imglist.Count);
-            progressDialog.Show();
 
             Action doCompress =
                 () =>
@@ -160,12 +160,12 @@ namespace CGCompress
                         Mat img1 = Cv2.ImRead(infopath +"\\"+i.ToString() + inputImageType);
                         if (Convert.ToInt32((String)Pictures.Rows[i]["Father"])< 0)
                         {
-                            Cv2.ImWrite(outpath + "\\" + (string)Pictures.Rows[i]["Name"] + inputImageType, img1);
+                            Cv2.ImWrite(outpath + "\\" + (string)Pictures.Rows[i]["Name"] + outputImageType, img1);
                         }
                         else
                         {
                             Mat img2 = Cv2.ImRead(infopath + "\\"+(string)Pictures.Rows[i]["Father"] + inputImageType);
-                            Cv2.ImWrite(outpath + "\\" + (string)Pictures.Rows[i]["Name"] + inputImageType, ImageTool.Add_Mold(img2, img1));
+                            Cv2.ImWrite(outpath + "\\" + (string)Pictures.Rows[i]["Name"] + outputImageType, ImageTool.Add_Mold(img2, img1));
                         }
                         img1.Release();
                         GC.Collect();
