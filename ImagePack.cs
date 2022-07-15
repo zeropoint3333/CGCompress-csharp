@@ -151,7 +151,7 @@ namespace CGCompress
             ProgressDialog progressDialog = new ProgressDialog(Pictures.Rows.Count);
             progressDialog.Show();
 
-            Action doCompress =
+            Action doDecompress =
                 () =>
                 {
                     for (int i = 0; i < Pictures.Rows.Count; i++)
@@ -171,7 +171,7 @@ namespace CGCompress
                         GC.Collect();
                     }
                 };
-            await Task.Run(doCompress);
+            await Task.Run(doDecompress);
 
             progressDialog.Close();
             System.Windows.MessageBox.Show("完成解压缩！");
