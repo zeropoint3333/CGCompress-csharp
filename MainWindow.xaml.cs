@@ -106,7 +106,7 @@ namespace CGCompress
             if (FileExplorer.SelectedCells.Count == 0) return;
 
             String imgname = ((FileSystemInfo)this.FileExplorer.SelectedItem).Name;
-            string imgtype = ((FileSystemInfo)this.FileExplorer.SelectedItem).Extension.ToString();
+            String imgtype = ((FileSystemInfo)this.FileExplorer.SelectedItem).Extension.ToString();
             if (!new System.Text.RegularExpressions.Regex(@"(\.(?i)(jpg|jpeg|png|bmp|webp|jp2|tiff)$)").IsMatch(imgtype)) return;
 
 
@@ -137,13 +137,49 @@ namespace CGCompress
         private void FileExplorerRow_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             DataGridRow? row = sender as DataGridRow;
-            if (Directory.Exists(((FileSystemInfo)row.Item).FullName)) mainWindowViewModel.Path = ((FileSystemInfo)row.Item).FullName;
+            if (Directory.Exists(((FileSystemInfo)row.Item).FullName))
+            {
+                mainWindowViewModel.Path = ((FileSystemInfo)row.Item).FullName;
+                return;
+            }
+            String imgname = ((FileSystemInfo)row.Item).Name;
+            String imgtype = ((FileSystemInfo)row.Item).Extension.ToString();
+            if (!new System.Text.RegularExpressions.Regex(@"(\.(?i)(jpg|jpeg|png|bmp|webp|jp2|tiff)$)").IsMatch(imgtype)) return;
+            if (File.Exists(mainWindowViewModel.Path + "\\compress_info.xml"))
+            {
+                System.Data.DataSet ds = new System.Data.DataSet();
+                ds.ReadXml(mainWindowViewModel.Path + "\\compress_info.xml");
+                System.Data.DataTable Pictures = ds.Tables[0];
+                int index = Convert.ToInt32(imgname.Substring(0, imgname.IndexOf(".")));
+                Mat img1 = Cv2.ImRead(mainWindowViewModel.Path + "\\" + index.ToString() + imgtype);
+                if (Convert.ToInt32((String)Pictures.Rows[index]["Father"]) < 0)
+                {
+                    Cv2.ImShow("image", img1);
+                }
+                else
+                {
+                    Mat img2 = Cv2.ImRead(mainWindowViewModel.Path + "\\" + (string)Pictures.Rows[index]["Father"] + imgtype);
+                    Cv2.ImShow("image", ImageTool.Add_Mold(img2, img1));
+                }
+                img1.Release();
+            }
+            else
+            {
+                Cv2.ImShow("image", Cv2.ImRead(mainWindowViewModel.Path + "\\" + imgname));
+            }
         }
-
         private void MoveUp_Click(object sender, RoutedEventArgs e)
         {
             if (mainWindowViewModel.Path.LastIndexOf("\\") < 0) return;
             mainWindowViewModel.Path = mainWindowViewModel.Path.Substring(0, mainWindowViewModel.Path.LastIndexOf("\\"));
+        }
+        private void Lock_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+        private void Unlock_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

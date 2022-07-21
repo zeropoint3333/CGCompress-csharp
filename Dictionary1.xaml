@@ -117,4 +117,89 @@
             </Canvas>
         </Viewbox>
     </ControlTemplate>
+    <ControlTemplate x:Key="Lock">
+        <Viewbox Stretch="Uniform">
+            <Rectangle Width="22" Height="22">
+                <Rectangle.Resources>
+                    <SolidColorBrush x:Key="canvas" Opacity="0" />
+                    <SolidColorBrush x:Key="light-defaultgrey-10" Color="#212121" Opacity="0.1" />
+                    <SolidColorBrush x:Key="light-defaultgrey" Color="#212121" Opacity="1" />
+                </Rectangle.Resources>
+                <Rectangle.Fill>
+                    <DrawingBrush Stretch="None">
+                        <DrawingBrush.Drawing>
+                            <DrawingGroup ClipGeometry="M0,0 V24 H24 V0 H0 Z">
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#FF000000" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" />
+                                    </GeometryDrawing.Pen>
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="2" RadiusY="2" Rect="5,11,14,10" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#FF000000" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" />
+                                    </GeometryDrawing.Pen>
+                                    <GeometryDrawing.Geometry>
+                                        <EllipseGeometry RadiusX="1" RadiusY="1" Center="12,16" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                                <GeometryDrawing Geometry="F1 M24,24z M0,0z M8,11L8,7A4,4,0,0,1,16,7L16,11">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#FF000000" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Viewbox>
+    </ControlTemplate>
+    <ControlTemplate x:Key="Unlock">
+        <Viewbox Stretch="Uniform">
+            <Rectangle Width="22" Height="22">
+                <Rectangle.Resources>
+                    <SolidColorBrush x:Key="canvas" Opacity="0" />
+                    <SolidColorBrush x:Key="light-defaultgrey-10" Color="#212121" Opacity="0.1" />
+                    <SolidColorBrush x:Key="light-defaultgrey" Color="#212121" Opacity="1" />
+                </Rectangle.Resources>
+                <Rectangle.Fill>
+                    <DrawingBrush Stretch="None">
+                        <DrawingBrush.Drawing>
+                            <DrawingGroup ClipGeometry="M0,0 V24 H24 V0 H0 Z">
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#FF000000" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" />
+                                    </GeometryDrawing.Pen>
+                                    <GeometryDrawing.Geometry>
+                                        <LineGeometry StartPoint="3,3" EndPoint="21,21" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                                <GeometryDrawing Geometry="F1 M24,24z M0,0z M19,19A2,2,0,0,1,17,21L7,21A2,2,0,0,1,5,19L5,13A2,2,0,0,1,7,11L11,11 M15,11L17,11A2,2,0,0,1,19,13L19,15">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#FF000000" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#FF000000" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" />
+                                    </GeometryDrawing.Pen>
+                                    <GeometryDrawing.Geometry>
+                                        <EllipseGeometry RadiusX="1" RadiusY="1" Center="12,16" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                                <GeometryDrawing Geometry="F1 M24,24z M0,0z M8,11L8,8 M8.712,4.722A4,4,0,0,1,16,7L16,11">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#FF000000" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Viewbox>
+    </ControlTemplate>
 </ResourceDictionary>

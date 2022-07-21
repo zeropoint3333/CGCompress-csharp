@@ -19,9 +19,6 @@
             <Button x:Name="OpenFolder" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="{Binding ActualHeight, ElementName=OpenFolder, Mode=OneWay}" Click="OpenFolder_Click">
                 <ContentControl Template="{StaticResource OpenFolder}" />
             </Button>
-            <Button x:Name="Search" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="{Binding ActualHeight, ElementName=Search, Mode=OneWay}">
-                <ContentControl Template="{StaticResource Search}" />
-            </Button>
             <Button x:Name="Compress" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="{Binding ActualHeight, ElementName=Compress, Mode=OneWay}" Click="Compress_Click">
                 <ContentControl Template="{StaticResource Compress}" />
             </Button>
@@ -30,6 +27,12 @@
             </Button>
             <Button x:Name="SeeImage" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="{Binding ActualHeight, ElementName=SeeImage, Mode=OneWay}" Click="SeeImage_Click">
                 <ContentControl Template="{StaticResource SeeImage}" />
+            </Button>
+            <Button x:Name="Lock" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="{Binding ActualHeight, ElementName=Setting, Mode=OneWay}" Click="Lock_Click">
+                <ContentControl Template="{StaticResource Lock}" />
+            </Button>
+            <Button x:Name="Unlock" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="{Binding ActualHeight, ElementName=Setting, Mode=OneWay}" Click="Unlock_Click">
+                <ContentControl Template="{StaticResource Unlock}" />
             </Button>
             <Button x:Name="Setting" HorizontalAlignment="Left" VerticalAlignment="Stretch" Width="{Binding ActualHeight, ElementName=Setting, Mode=OneWay}">
                 <ContentControl Template="{StaticResource Setting}" />
