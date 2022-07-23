@@ -1,0 +1,56 @@
+﻿<Window x:Class="CGCompress.Views.ImageExplorer"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CGCompress.Views"
+        xmlns:viewmodels="clr-namespace:CGCompress.ViewModels"
+        xmlns:c="clr-namespace:CGCompress.Converter"
+        d:DataContext="{d:DesignInstance Type=viewmodels:ImageExplorerViewModel}"
+        mc:Ignorable="d"
+        Title="ImageExplorer" Height="450" Width="800">
+    <Window.Resources>
+        <c:Enum2boolConverter x:Key="String2BitmapImage" />
+    </Window.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <ListView Name="imglist" Grid.Column="1" Grid.ColumnSpan="3" ItemsSource="{Binding Images}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Image Width="{Binding Width, ElementName=imglist, Mode=OneWay}" Source="{Binding Path=oneimg, ElementName=this, Converter={StaticResource String2BitmapImage}}"/>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+        <Border Name="theBorder" Grid.Column="4" Grid.ColumnSpan="10" Background="GhostWhite" BorderBrush="Silver" BorderThickness="1" CornerRadius="8,8,3,3" 
+                Width="{Binding BorderWidth,Mode=TwoWay}" Height="{Binding BorderHeight,Mode=TwoWay}">
+            <Image Height="{Binding imgHeight}" Width="{Binding imgWidth}" Source="{Binding ImageSource}"/>
+        </Border>
+
+        <GroupBox Grid.Column="14">
+            <StackPanel Orientation="Vertical" >
+                <Button Height="{Binding ActualWidth, ElementName=button, Mode=OneWay}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                    <ContentControl Template="{StaticResource Save}" />
+                </Button>
+                <Button Height="{Binding ActualWidth, ElementName=button, Mode=OneWay}" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}">
+                    <ContentControl Template="{StaticResource Copy}" />
+                </Button>
+            </StackPanel>
+        </GroupBox>
+    </Grid>
+</Window>

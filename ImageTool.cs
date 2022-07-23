@@ -114,5 +114,12 @@ namespace CGCompress
             }
             return zeros/(H*W*C);
         }
+
+        int[] PM, delta, initJump;
+        public static Mat HenonEncrypt(Mat img)
+        {
+
+            return img;
+        }
     }
 }

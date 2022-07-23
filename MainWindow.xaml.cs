@@ -36,17 +36,16 @@ namespace CGCompress
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Mat img1 = Cv2.ImRead(@"resource\01.png");
-            Mat img2 = Cv2.ImRead(@"resource\03.png");
-
-            Mat diff = ImageTool.Subtract_Mold(img2, img1);
-            Mat add = ImageTool.Add_Mold(diff, diff);
-
-            //MessageBox.Show(ImageTool.zerorate(img1).ToString()+"+"+ ImageTool.zerorate(diff).ToString());
-            //Cv2.ImShow("image", add);1, add);
-            //png jp2 webp压缩率依次升高
-
-            //Cv2.WaitKey(0);
+            Mat src = Cv2.ImRead(@"D:\01.png");
+            /*
+            Mat[] img1 = Cv2.Split(src);
+            Cv2.Merge(new Mat[] { img1[0], img1[1], img1[2] }, src);
+            Cv2.ImShow("1", src);
+            */
+            //src.ConvertTo(src, MatType.CV_32F,1.0/255);
+            //Cv2.Dct(src, src);
+            //Cv2.Idct(src, src);
+           
         }
 
         private void OpenFolder_Click(object sender, RoutedEventArgs e)
@@ -109,29 +108,8 @@ namespace CGCompress
             String imgtype = ((FileSystemInfo)this.FileExplorer.SelectedItem).Extension.ToString();
             if (!new System.Text.RegularExpressions.Regex(@"(\.(?i)(jpg|jpeg|png|bmp|webp|jp2|tiff)$)").IsMatch(imgtype)) return;
 
-
-            if (File.Exists(mainWindowViewModel.Path + "\\compress_info.xml"))
-            {
-                System.Data.DataSet ds = new System.Data.DataSet();
-                ds.ReadXml(mainWindowViewModel.Path + "\\compress_info.xml");
-                System.Data.DataTable Pictures = ds.Tables[0];
-                int index = Convert.ToInt32(imgname.Substring(0,imgname.IndexOf(".")));
-                Mat img1 = Cv2.ImRead(mainWindowViewModel.Path + "\\" + index.ToString() + imgtype);
-                if (Convert.ToInt32((String)Pictures.Rows[index]["Father"]) < 0)
-                {
-                    Cv2.ImShow("image" , img1);
-                }
-                else
-                {
-                    Mat img2 = Cv2.ImRead(mainWindowViewModel.Path + "\\" + (string)Pictures.Rows[index]["Father"] + imgtype);
-                    Cv2.ImShow("image", ImageTool.Add_Mold(img2, img1));
-                }
-                img1.Release();
-            }
-            else
-            {
-                Cv2.ImShow("image", Cv2.ImRead(mainWindowViewModel.Path + "\\"+imgname));
-            }
+            Views.ImageExplorer test = new Views.ImageExplorer(imgname, mainWindowViewModel.Path);
+            test.Show();
         }
 
         private void FileExplorerRow_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -145,28 +123,9 @@ namespace CGCompress
             String imgname = ((FileSystemInfo)row.Item).Name;
             String imgtype = ((FileSystemInfo)row.Item).Extension.ToString();
             if (!new System.Text.RegularExpressions.Regex(@"(\.(?i)(jpg|jpeg|png|bmp|webp|jp2|tiff)$)").IsMatch(imgtype)) return;
-            if (File.Exists(mainWindowViewModel.Path + "\\compress_info.xml"))
-            {
-                System.Data.DataSet ds = new System.Data.DataSet();
-                ds.ReadXml(mainWindowViewModel.Path + "\\compress_info.xml");
-                System.Data.DataTable Pictures = ds.Tables[0];
-                int index = Convert.ToInt32(imgname.Substring(0, imgname.IndexOf(".")));
-                Mat img1 = Cv2.ImRead(mainWindowViewModel.Path + "\\" + index.ToString() + imgtype);
-                if (Convert.ToInt32((String)Pictures.Rows[index]["Father"]) < 0)
-                {
-                    Cv2.ImShow("image", img1);
-                }
-                else
-                {
-                    Mat img2 = Cv2.ImRead(mainWindowViewModel.Path + "\\" + (string)Pictures.Rows[index]["Father"] + imgtype);
-                    Cv2.ImShow("image", ImageTool.Add_Mold(img2, img1));
-                }
-                img1.Release();
-            }
-            else
-            {
-                Cv2.ImShow("image", Cv2.ImRead(mainWindowViewModel.Path + "\\" + imgname));
-            }
+
+            Views.ImageExplorer test = new Views.ImageExplorer(imgname, mainWindowViewModel.Path);
+            test.Show();
         }
         private void MoveUp_Click(object sender, RoutedEventArgs e)
         {
@@ -175,7 +134,7 @@ namespace CGCompress
         }
         private void Lock_Click(object sender, RoutedEventArgs e)
         {
-
+            
         }
         private void Unlock_Click(object sender, RoutedEventArgs e)
         {

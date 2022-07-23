@@ -202,4 +202,46 @@
             </Rectangle>
         </Viewbox>
     </ControlTemplate>
+    <ControlTemplate x:Key="Copy">
+        <Viewbox Stretch="Uniform">
+            <Rectangle Width="22" Height="22">
+                <Rectangle.Fill>
+                    <DrawingBrush Stretch="None">
+                        <DrawingBrush.Drawing>
+                            <DrawingGroup ClipGeometry="M0,0 V24 H24 V0 H0 Z">
+                                <GeometryDrawing>
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#FF2C3E50" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" />
+                                    </GeometryDrawing.Pen>
+                                    <GeometryDrawing.Geometry>
+                                        <RectangleGeometry RadiusX="2" RadiusY="2" Rect="8,8,12,12" />
+                                    </GeometryDrawing.Geometry>
+                                </GeometryDrawing>
+                                <GeometryDrawing Geometry="F1 M24,24z M0,0z M16,8L16,6A2,2,0,0,0,14,4L6,4A2,2,0,0,0,4,6L4,14A2,2,0,0,0,6,16L8,16">
+                                    <GeometryDrawing.Pen>
+                                        <Pen Brush="#FF2C3E50" Thickness="1.5" StartLineCap="Round" EndLineCap="Round" LineJoin="Round" />
+                                    </GeometryDrawing.Pen>
+                                </GeometryDrawing>
+                            </DrawingGroup>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Viewbox>
+    </ControlTemplate>
+    <ControlTemplate x:Key="Save">
+        <Viewbox Stretch="Uniform">
+            <Rectangle Width="22" Height="22">
+                <Rectangle.Fill>
+                    <DrawingBrush Stretch="None">
+                        <DrawingBrush.Drawing>
+                            <DrawingGroup ClipGeometry="M0,0 V24 H24 V0 H0 Z">
+                                <GeometryDrawing Brush="#FF000000" Geometry="F1 M24,24z M0,0z M17,3L5,3C3.89,3,3,3.9,3,5L3,19C3,20.1,3.89,21,5,21L19,21C20.1,21,21,20.1,21,19L21,7 17,3z M12,19C10.34,19 9,17.66 9,16 9,14.34 10.34,13 12,13 13.66,13 15,14.34 15,16 15,17.66 13.66,19 12,19z M15,9L5,9 5,5 15,5 15,9z" />
+                            </DrawingGroup>
+                        </DrawingBrush.Drawing>
+                    </DrawingBrush>
+                </Rectangle.Fill>
+            </Rectangle>
+        </Viewbox>
+    </ControlTemplate>
 </ResourceDictionary>
